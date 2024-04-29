@@ -71,8 +71,13 @@
       </form>
 
       <ul class="navbar-nav ms-3">
-        <li class="nav-item" style="width: 65px;">
-          <span class="text-decoration-none text-white align-items-center" *ngIf="currentUser">{{ currentUser.displayName }}</span >
+        <span class="text-decoration-none text-white align-items-center" [style.display]="isSignedIn() ? '' : 'none'" >{{ text }}</span>
+
+        <li class="nav-item align-items-center" style="width: 65px;">
+          <button (click)="redirect('signin')" class="text-decoration-none p-0 border-0 bg-transparent text-white align-items-center" [style.display]="isSignedIn() ? 'none' : ''">Sign In</button>
+        </li>
+        <li class="nav-item align-items-center" style="width: 65px;">
+          <button (click)="signOut()" class="w-auto text-decoration-none p-0 border-0 bg-transparent text-white align-items-center" [style.display]="isSignedIn() ? '' : 'none' ">Sign Out</button>
         </li>
       </ul>
     </div>

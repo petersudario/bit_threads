@@ -1,15 +1,28 @@
 import { Injectable } from '@angular/core';
-import { Auth, User, signInWithEmailAndPassword, authState, sendPasswordResetEmail, createUserWithEmailAndPassword } from '@angular/fire/auth';
-import { catchError, from, Observable, throwError } from 'rxjs';
+import { Auth, User, signInWithEmailAndPassword, authState, sendPasswordResetEmail, createUserWithEmailAndPassword, user } from '@angular/fire/auth';
+import e from 'express';
+import { catchError, from, Observable, throwError, map, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
+  loggedIn = new BehaviorSubject<boolean>(false);
+  loggedIn$ = this.loggedIn.asObservable();
 
   constructor(
     private auth: Auth
-  ) { }
+  ) { 
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.loggedIn.next(true);
+      }
+      else {
+        this.loggedIn.next(false);
+      }
+
+    } );
+  }
 
   signIn(params: SignIn): Observable<any> {
     return from(signInWithEmailAndPassword(
@@ -39,15 +52,13 @@ export class AuthenticationService {
     );
   }
 
-  isSignedIn() : boolean {
-    if(authState(this.auth)) {
-      return true;
-    }
-    return false;
+  public isSignedIn(): boolean {
+    return !!user(this.auth);
   }
 
+
   getUser(): Observable<User | null> {
-    return authState(this.auth);
+    return authState(this.auth).pipe(map(user => user));
   }
 
   private translateFirebaseErrorMessage({code, message}: FirebaseError) {
@@ -59,7 +70,6 @@ export class AuthenticationService {
     }
     return message;
   }
-
 }
 
 type SignUp = {
@@ -75,4 +85,4 @@ type SignIn = {
 type FirebaseError = {
   code: string;
   message: string
-};
+}; 

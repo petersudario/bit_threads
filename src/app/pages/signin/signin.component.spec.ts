@@ -2,9 +2,9 @@ import { Location } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SigninComponent } from './signin.component';
+import { BlankComponent } from '../../blank/blank.component';
 import { RouterTestingModule } from '@angular/router/testing';
-
-import { AuthenticationService } from './services/authentication.service';
+import { AuthenticationService } from '../../services/authentication.service';
 import { Subject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 

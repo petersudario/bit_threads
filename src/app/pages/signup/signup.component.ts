@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { AuthenticationService } from './services/authentication.service';
+import { AuthenticationService } from '../../services/authentication.service';
 import  { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 

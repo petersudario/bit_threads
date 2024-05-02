@@ -77,6 +77,9 @@
           <button (click)="redirect('signin')" class="text-decoration-none p-0 border-0 bg-transparent text-white align-items-center" [style.display]="isSignedIn() ? 'none' : ''">Sign In</button>
         </li>
         <li class="nav-item align-items-center" style="width: 65px;">
+          <button (click)="redirect('signup')" class="text-decoration-none p-0 border-0 bg-transparent text-white align-items-center" [style.display]="isSignedIn() ? 'none' : ''">Sign Up</button>
+        </li>
+        <li class="nav-item align-items-center" style="width: 65px;">
           <button (click)="signOut()" class="w-auto text-decoration-none p-0 border-0 bg-transparent text-white align-items-center" [style.display]="isSignedIn() ? '' : 'none' ">Sign Out</button>
         </li>
       </ul>

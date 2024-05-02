@@ -3,6 +3,7 @@ import { Auth, User } from '@angular/fire/auth';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../../services/authentication.service';
 
 
 @Component({
@@ -19,7 +20,9 @@ export class NavbarComponent {
 
   constructor(
     private auth: Auth,
-    private router: Router
+    private router: Router,
+    private authenticationService: AuthenticationService,
+
   ) {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -42,9 +45,8 @@ export class NavbarComponent {
   }
 
   public signOut(): void {
-    this.auth.signOut();
-    this.router.navigate(['']);
 
+    this.authenticationService.signOut();
   }
 
   public redirect(route: string): void {

@@ -1,88 +1,62 @@
 import { Injectable } from '@angular/core';
-import { Auth, User, signInWithEmailAndPassword, authState, sendPasswordResetEmail, createUserWithEmailAndPassword, user } from '@angular/fire/auth';
-import e from 'express';
-import { catchError, from, Observable, throwError, map, BehaviorSubject } from 'rxjs';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, UserCredential } from '@angular/fire/auth'; // Import UserCredential from '@angular/fire/auth'
+import { catchError, tap } from 'rxjs/operators';
+import { from, Observable, throwError } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthenticationService {
-  loggedIn = new BehaviorSubject<boolean>(false);
-  loggedIn$ = this.loggedIn.asObservable();
+  loggedIn: boolean = false;
 
-  constructor(
-    private auth: Auth
-  ) { 
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.loggedIn.next(true);
-      }
-      else {
-        this.loggedIn.next(false);
-      }
+  constructor(private auth: Auth) {}
 
-    } );
-  }
-
-  signIn(params: SignIn): Observable<any> {
-    return from(signInWithEmailAndPassword(
-      this.auth, params.email, params.password
-    )).pipe(
-      catchError((error: FirebaseError) => 
-        throwError(() => new Error(this.translateFirebaseErrorMessage(error)))
-      )
+  signIn(params: SignIn): Observable<UserCredential> {
+    return from(signInWithEmailAndPassword(this.auth, params.email, params.password)).pipe(
+      catchError((error) => throwError(() => this.translateFirebaseErrorMessage(error))),
+      tap(() => this.loggedIn = true)
     );
   }
 
-  signUp(params: SignUp): Observable<any> {
-    return from(createUserWithEmailAndPassword(
-      this.auth, params.email, params.password
-    )).pipe(
-      catchError((error: FirebaseError) => 
-        throwError(() => new Error(this.translateFirebaseErrorMessage(error)))
-      )
+  signUp(params: SignUp): Observable<UserCredential> {
+    return from(createUserWithEmailAndPassword(this.auth, params.email, params.password)).pipe(
+      catchError((error) => throwError(() => this.translateFirebaseErrorMessage(error))),
+      tap(() => this.loggedIn = true)
     );
   }
 
   recoverPassword(email: string): Observable<void> {
     return from(sendPasswordResetEmail(this.auth, email)).pipe(
-      catchError((error: FirebaseError) => 
-        throwError(() => new Error(this.translateFirebaseErrorMessage(error)))
-      )
+      catchError((error) => throwError(() => this.translateFirebaseErrorMessage(error)))
     );
   }
 
-  public isSignedIn(): boolean {
-    return !!user(this.auth);
+  isSignedIn(): boolean {
+    return this.loggedIn;
   }
 
-
-  getUser(): Observable<User | null> {
-    return authState(this.auth).pipe(map(user => user));
+  signOut(): void {
+    this.auth.signOut();
+    this.loggedIn = false;
   }
 
-  private translateFirebaseErrorMessage({code, message}: FirebaseError) {
-    if (code === "auth/email-already-in-use") {
-      return "Este e-mail já está em uso. Tente outro e-mail.";
-    }
-    if (code === "auth/weak-password") {
-      return "Sua senha é fraca demais. Tente uma senha maior.";
-    }
-    return message;
+  private translateFirebaseErrorMessage(error: any): string {
+    // Implement translation logic here
+    return error.message;
   }
 }
 
 type SignUp = {
   email: string;
   password: string;
-}
+};
 
 type SignIn = {
   email: string;
   password: string;
-}
+};
 
 type FirebaseError = {
   code: string;
-  message: string
-}; 
+  message: string;
+};

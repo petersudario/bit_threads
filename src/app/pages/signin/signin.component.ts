@@ -29,6 +29,9 @@ export class SigninComponent {
   ) { }
 
   ngOnInit(): void {
+
+    this.isSignedIn();
+
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
@@ -71,6 +74,15 @@ export class SigninComponent {
         });
       }
     })
+  }
+
+  isSignedIn() {
+    if (this.authenticationService.isSignedIn()) {
+      this.router.navigate(['']);
+      this.snackBar.open('Você já está logado.', 'OK', {
+        duration: 5000,
+      });
+    }
   }
 
 }

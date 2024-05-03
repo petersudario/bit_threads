@@ -22,6 +22,7 @@ import { CommonModule } from '@angular/common';
 export class SignupComponent implements OnInit {
   form!: FormGroup;
   isRegistering = false;
+  username: string = '';
 
   constructor(
     private authenticationService: AuthenticationService,

@@ -1,0 +1,25 @@
+<div class="flex-col container mt-5 mb-5 gap-6">
+  <!-- Post form -->
+  <div class="mb-3">
+    <form [formGroup]="post_form">
+      <textarea id="input_post" formControlName="input_post" class="form-control post-input" rows="5" placeholder="What's on your mind?"></textarea>
+      <input id="username" formControlName="username" hidden />
+      <button class="btn btn-primary" (click)="post_thread()" >Post</button>
+    </form>
+  </div>
+  
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">User Name</h5>
+      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis libero ac mauris fermentum, nec ultrices ipsum gravida. Duis vehicula leo a nulla scelerisque, vel bibendum mi lacinia.</p>
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <button class="btn btn-link text-primary"><i class="far fa-heart"></i> Like</button>
+          <button class="btn btn-link text-primary"><i class="fas fa-retweet"></i> Retweet</button>
+        </div>
+        <small class="text-muted">2 mins ago</small>
+      </div>
+    </div>
+  </div>
+
+</div>

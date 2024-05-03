@@ -1,0 +1,38 @@
+body {
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+}
+.container {
+  max-width: 800px;
+  margin: auto;
+}
+.card {
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+.post-input {
+  border: 2px solid #ddd;
+  border-radius: 20px;
+  resize: none;
+  font-size: 1.2rem;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+.btn-primary {
+  background-color: #1da1f2;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+}
+.btn-primary:hover {
+  background-color: #0f89d1;
+}
+.btn-link {
+  font-size: 1.2rem;
+}
+.text-muted {
+  font-size: 0.9rem;
+}

@@ -41,7 +41,6 @@ export class AuthenticationService {
   }
 
   private translateFirebaseErrorMessage(error: any): string {
-    // Implement translation logic here
     return error.message;
   }
 }

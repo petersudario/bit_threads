@@ -1,1 +1,10 @@
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+::-webkit-scrollbar {
+  width: 10px;
+
+}
+::-webkit-scrollbar-thumb {
+  background-color: gold;
+  border-radius: 4px;
+}

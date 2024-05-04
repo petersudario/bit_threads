@@ -8,16 +8,16 @@
     </form>
   </div>
   
-  <div class="card mb-3">
+  <div class="card mb-3" *ngFor="let thread of threads | async">
     <div class="card-body">
-      <h5 class="card-title">User Name</h5>
-      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis libero ac mauris fermentum, nec ultrices ipsum gravida. Duis vehicula leo a nulla scelerisque, vel bibendum mi lacinia.</p>
+      <h5 class="card-title">{{thread['user'] ? thread['text'] : "Anonymous"}}</h5>
+      <p class="card-text">{{thread['text']}}</p>
       <div class="d-flex justify-content-between align-items-center">
         <div>
           <button class="btn btn-link text-primary"><i class="far fa-heart"></i> Like</button>
-          <button class="btn btn-link text-primary"><i class="fas fa-retweet"></i> Retweet</button>
+          <button class="btn btn-link text-primary"><i class="fas fa-retweet"></i> Re-byte</button>
         </div>
-        <small class="text-muted">2 mins ago</small>
+        <small class="text-muted">{{ thread['date'].toDate() | date:'medium' }}</small>
       </div>
     </div>
   </div>

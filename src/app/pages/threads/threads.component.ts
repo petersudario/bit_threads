@@ -5,8 +5,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFireModule } from '@angular/fire/compat';
 import firebase from 'firebase/compat/app';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
 
 @Component({
   selector: 'app-threads',
@@ -19,6 +21,7 @@ export class ThreadsComponent implements OnInit {
   post_form!: FormGroup;
   auth = getAuth();
   username = this.auth.currentUser?.email;
+  threads = this.threadService.showThreads();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,16 +36,13 @@ export class ThreadsComponent implements OnInit {
       if (user) {
         this.username = user.email;
       }
+      
     });
 
     this.post_form = this.formBuilder.group({
       username: [this.username],
       input_post: [''],
     });
-
-    if (!this.username) {
-      console.log('User not logged in');
-    }
   }
 
   post_thread() {

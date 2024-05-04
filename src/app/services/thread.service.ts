@@ -10,10 +10,14 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export class ThreadService {
 
+
   private firestore: Firestore = inject(Firestore); 
   threads = collectionData(collection(this.firestore, 'threads'));
 
   createDoc(form: FormGroup): Promise<DocumentReference<any>> {
     return addDoc(collection(this.firestore, 'threads'), { user: form.value.username, text: form.value.input_post, date: new Date() });
   }
+   showThreads() {
+    return this.threads;
+   }
 }
